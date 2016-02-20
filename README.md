@@ -1,85 +1,55 @@
 # delay_decorator
 A decorator for delayed function executing
 
-## What's wrapcache?
+## What's delay_decorator?
 
-`wrapcache` is a decorator that enables caching of return values for functions.
+`delay_decorator` is a decorator that is a substitute of Scheduler model of python standard lib.
 
-The cache keys are dependent completely on the arguments passed to the function. very simple to use. 
+Auto delay the Function execution for a certain period time.
+The new function will replace the older one and reset the countdown of the delay time. `Support python 2.7 ~ python3.5`.
 
-Also has some `API` to `Programmatic` get cache or remove cache. `Support python 2.6 ~ python3.5`.
-
-Here's an example of how you might use wrapcache:
+Here's an example of how you might use delay_decorator:
 
 ```python
 
-import wrapcache
-
-from time import sleep
-import random
-
-@wrapcache.wrapcache(timeout = 3)
-def need_cache_function(input, t = 2, o = 3):
-    sleep(2)
-    return random.randint(1, 100)
+import time
+from delay import Delayer
 
 if __name__ == "__main__":
-	for i in range(10):
-		sleep(1)
-		print(need_cache_function(1, t = 2, o = 3))
-	
-	#get cache Programmatic
-	key_func = wrapcache.keyof(need_cache_function, 1, o = 3, t = 2)
-	print(wrapcache.get(key_func))
-	#remove cache Programmatic
-	print(wrapcache.remove(wrapcache.keyof(need_cache_function, 1, o = 3, t = 2)))
+
+    @Delayer.delay(4)
+    def test(key):
+        print("The thread: {key} run at {time}".format(key=key, time=str(time.time())))
+
+    print("Now:" + str(time.time()))
+    test("First")  # will run after 4 seconds
+
+    time.sleep(5)
+    print("Now:" + str(time.time()))
+    test("Second")  # Won't run
+    time.sleep(2)
+    test("Third")   # will run after 6 seconds
 
 ```
 
 Some config:
 
 ```python
-@wrapcache.wrapcache(timeout = timeout, adapter = adapter)
+@Delayer.delay(delay_time = delay_time)
 ```
 
- - **`timeout`**: how much seconds the cache exist. Default is `-1`, not cached.
- - **`adapter`**: cache where, now can be `RedisAdapter` and `MemoryAdapter`. Default is `MemoryAdapter`. 
+ - **`delay_time`**: how much seconds to delay. Default is `5`, not cached.
 
  
-When use `RedisAdapter`, you need to set redis instance before use. e.g.
-
-```python
-REDIS_POOL = redis.ConnectionPool(host = '10.246.13.1', port = 6379, password = 'redis_pwd', db = 1)
-REDIS_INST = redis.Redis(connection_pool = REDIS_POOL, charset = 'utf8')
-RedisAdapter.db = REDIS_INST
-```
-
-When use `MemoryAdapter`, you can set `Memory Storage Policy` before use, that is choose where to store. Default is store in `{}`, also it provide `LUR`(Supported by [jlhutch/pylru](https://github.com/jlhutch/pylru), add `dynamic` size.) algorithm. e.g.
-
-
-```python
-from wrapcache.database import LruCacheDB
-lruDB = MemoryAdapter.db = LruCacheDB(size = 100)
-RedisAdapter.db = lruDB
-```
+When use `RedisAdapter`, you need to set redi
 
 ## How to Install and Use?
 
 ### Install
 
-Three ways to install wrapcache: 
+#### 1. Manual installation
 
-#### 1. Use tool install
-
- - `pip install wrapcache`
-
-#### 2. Download to install
-
- - Download from [https://pypi.python.org/pypi/wrapcache/](https://pypi.python.org/pypi/wrapcache/), and run `python setup.py install`.
-
-#### 3. Manual installation
-
- - Manual installation: Put `wrapcache` folder into current directory or `site-packages`, then `import wrapcache` to use.
+ - Manual installation: Put `delay` folder into current directory or `site-packages`, then `import Delayer` to use.
 
 
 ### Usage
@@ -88,24 +58,9 @@ Three ways to install wrapcache:
 
 ```python
 
-import wrapcache
-@wrapcache.wrapcache(timeout = 3)
-def need_cache_function():
-	return 'hello wrapcache'
+import Delayer
+@Delayer.delay(delay_time = delay_time)
+def need_to_be_delay_function():
+	pass    # no returns
 
 ```
-
-#### API
-
-1. **`wrapcache.keyof(func, *args, **kws)`**: get the key of function output cache.
-2. **`wrapcache.get(key, adapter = MemoryAdapter)`**: get the value of cache.
-3. **`wrapcache.set(key, value, timeout = -1, adapter = MemoryAdapter)`**: set cache use code.
-4. **`wrapcache.remove(key, adapter = MemoryAdapter)`**: remove a cache.
-5. **`wrapcache.flush(adapter = MemoryAdapter)`**: clear all the cache.
-
-The API 2~5, need to input a `adapter` to set which db to operate.
-
-
-## TODO
-
- - usage wiki.

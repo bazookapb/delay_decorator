@@ -7,15 +7,14 @@ import functools
 import logging
 from threading import Condition
 import threading
-import time
 
 class Delayer(object):
     '''
     Delay:
     A python Function / Method delay executing system base on function Decorators.
 
-    Auto delay the Function execute for a certain period time.
-    The new function will replace the older one and reset the delay time
+    Auto delay the Function execution for a certain period time.
+    The new function will replace the older one and reset the countdown of the delay time.
     '''
     current_timer = None
     condition = Condition()
