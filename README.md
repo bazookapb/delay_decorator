@@ -46,8 +46,6 @@ Some config:
 
 ### Install
 
-### Install
-
 Three ways to install delay_decorator: 
 
 #### 1. Use tool install
