@@ -60,10 +60,10 @@ target/
 
 .settings/
 .project
-.idea
+.idea/
 
 test.py
-
+MANIFEST
 
 #Ipython Notebook
 .ipynb_checkpoints

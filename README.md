@@ -1,5 +1,5 @@
 # delay_decorator
-A decorator for delayed function executing
+A decorator for delayed function executing.  [中文README.md](README_zh.md)
 
 ## What's delay_decorator?
 
@@ -38,7 +38,7 @@ Some config:
 @Delayer.delay(delay_time = delay_time)
 ```
 
- - **`delay_time`**: how much seconds to delay. Default is `5`.
+ - **`delay_time`**: how many seconds to delay. Default is `5`.
 
  
 
@@ -46,9 +46,21 @@ Some config:
 
 ### Install
 
-#### 1. Manual installation
+### Install
 
- - Manual installation: Put `delay` folder into current directory or `site-packages`, then `import Delayer` to use.
+Three ways to install delay_decorator: 
+
+#### 1. Use tool install
+
+ - `pip install delay_decorator`
+
+#### 2. Download to install
+
+ - Download from [https://pypi.python.org/pypi/delay_decorator/](https://pypi.python.org/pypi/delay_decorator/), and run `python setup.py install`.
+
+#### 3. Manual installation
+
+ - Manual installation: Put `delay` folder into current directory or `site-packages`, then `import delay` to use.
 
 
 ### Usage
