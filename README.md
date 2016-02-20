@@ -38,10 +38,9 @@ Some config:
 @Delayer.delay(delay_time = delay_time)
 ```
 
- - **`delay_time`**: how much seconds to delay. Default is `5`, not cached.
+ - **`delay_time`**: how much seconds to delay. Default is `5`.
 
  
-When use `RedisAdapter`, you need to set redi
 
 ## How to Install and Use?
 
